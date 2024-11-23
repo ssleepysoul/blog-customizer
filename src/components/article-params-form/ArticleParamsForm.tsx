@@ -11,6 +11,7 @@ import {
 	contentWidthArr,
 	OptionType,
 	ArticleStateType,
+	defaultArticleState,
 } from '../../constants/articleProps';
 
 import styles from './ArticleParamsForm.module.scss';
@@ -19,35 +20,34 @@ import clsx from 'clsx';
 
 type ArticleParamsFormProps = {
 	onChange: (articleState: ArticleStateType) => void;
-	defaultState: ArticleStateType;
 };
 
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const sidebarRef = useRef(null);
 	const [fontFamilySelected, setFontFamilySelected] = useState<OptionType>(
-		props.defaultState.fontFamilyOption
+		defaultArticleState.fontFamilyOption
 	);
 	const [fontSizeSelected, setFontSizeSelected] = useState<OptionType>(
-		props.defaultState.fontSizeOption
+		defaultArticleState.fontSizeOption
 	);
 	const [fontColorSelected, setFontColorSelected] = useState<OptionType>(
-		props.defaultState.fontColor
+		defaultArticleState.fontColor
 	);
 	const [backgroundColorSelected, setBackgroundColorSelected] =
-		useState<OptionType>(props.defaultState.backgroundColor);
+		useState<OptionType>(defaultArticleState.backgroundColor);
 	const [widthContentSelected, setWidthContentSelected] = useState<OptionType>(
-		props.defaultState.contentWidth
+		defaultArticleState.contentWidth
 	);
 
 	function reset(): void {
-		setFontFamilySelected(props.defaultState.fontFamilyOption);
-		setFontSizeSelected(props.defaultState.fontSizeOption);
-		setFontColorSelected(props.defaultState.fontColor);
-		setBackgroundColorSelected(props.defaultState.backgroundColor);
-		setWidthContentSelected(props.defaultState.contentWidth);
+		setFontFamilySelected(defaultArticleState.fontFamilyOption);
+		setFontSizeSelected(defaultArticleState.fontSizeOption);
+		setFontColorSelected(defaultArticleState.fontColor);
+		setBackgroundColorSelected(defaultArticleState.backgroundColor);
+		setWidthContentSelected(defaultArticleState.contentWidth);
 
-		props.onChange(props.defaultState);
+		props.onChange(defaultArticleState);
 	}
 
 	const submit = (event: SyntheticEvent<HTMLButtonElement>) => {
