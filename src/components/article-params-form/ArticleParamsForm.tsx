@@ -9,7 +9,6 @@ import {
 	fontColors,
 	backgroundColors,
 	contentWidthArr,
-	OptionType,
 	ArticleStateType,
 	defaultArticleState,
 } from '../../constants/articleProps';
@@ -25,27 +24,14 @@ type ArticleParamsFormProps = {
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const sidebarRef = useRef(null);
-	const [fontFamilySelected, setFontFamilySelected] = useState<OptionType>(
-		defaultArticleState.fontFamilyOption
-	);
-	const [fontSizeSelected, setFontSizeSelected] = useState<OptionType>(
-		defaultArticleState.fontSizeOption
-	);
-	const [fontColorSelected, setFontColorSelected] = useState<OptionType>(
-		defaultArticleState.fontColor
-	);
-	const [backgroundColorSelected, setBackgroundColorSelected] =
-		useState<OptionType>(defaultArticleState.backgroundColor);
-	const [widthContentSelected, setWidthContentSelected] = useState<OptionType>(
-		defaultArticleState.contentWidth
-	);
+	const [allSelected, setAllSelected] = useState({
+		...defaultArticleState,
+	});
 
 	function reset(): void {
-		setFontFamilySelected(defaultArticleState.fontFamilyOption);
-		setFontSizeSelected(defaultArticleState.fontSizeOption);
-		setFontColorSelected(defaultArticleState.fontColor);
-		setBackgroundColorSelected(defaultArticleState.backgroundColor);
-		setWidthContentSelected(defaultArticleState.contentWidth);
+		setAllSelected({
+			...defaultArticleState,
+		});
 
 		props.onChange(defaultArticleState);
 	}
@@ -53,11 +39,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const submit = (event: SyntheticEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 		props.onChange({
-			fontFamilyOption: fontFamilySelected,
-			fontSizeOption: fontSizeSelected,
-			fontColor: fontColorSelected,
-			backgroundColor: backgroundColorSelected,
-			contentWidth: widthContentSelected,
+			...allSelected,
 		} as ArticleStateType);
 	};
 
@@ -103,45 +85,54 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 					<form className={styles.form}>
 						<h1 className={styles.title}>Задайте параметры</h1>
 						<Select
-							selected={fontFamilySelected}
+							selected={allSelected.fontFamilyOption}
 							options={fontFamilyOptions}
 							title={'Шрифт'}
 							onChange={(selected) => {
-								setFontFamilySelected(selected);
+								setAllSelected((prev) => ({
+									...prev,
+									fontFamilyOption: selected,
+								}));
 							}}
 						/>
 						<RadioGroup
 							name={'textSize'}
 							options={fontSizeOptions}
-							selected={fontSizeSelected}
+							selected={allSelected.fontSizeOption}
 							title={'Размер шрифта'}
 							onChange={(selected) => {
-								setFontSizeSelected(selected);
+								setAllSelected((prev) => ({
+									...prev,
+									fontSizeOption: selected,
+								}));
 							}}
 						/>
 						<Select
-							selected={fontColorSelected}
+							selected={allSelected.fontColor}
 							options={fontColors}
 							title={'Цвет шрифта'}
 							onChange={(selected) => {
-								setFontColorSelected(selected);
+								setAllSelected((prev) => ({ ...prev, fontColor: selected }));
 							}}
 						/>
 						<Separator />
 						<Select
-							selected={backgroundColorSelected}
+							selected={allSelected.backgroundColor}
 							options={backgroundColors}
 							title={'Цвет фона'}
 							onChange={(selected) => {
-								setBackgroundColorSelected(selected);
+								setAllSelected((prev) => ({
+									...prev,
+									backgroundColor: selected,
+								}));
 							}}
 						/>
 						<Select
-							selected={widthContentSelected}
+							selected={allSelected.contentWidth}
 							options={contentWidthArr}
 							title={'Ширина контента'}
 							onChange={(selected) => {
-								setWidthContentSelected(selected);
+								setAllSelected((prev) => ({ ...prev, contentWidth: selected }));
 							}}
 						/>
 						<div className={styles.bottomContainer}>

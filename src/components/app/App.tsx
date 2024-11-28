@@ -12,7 +12,6 @@ export const App = () => {
 		useState<ArticleStateType>(defaultArticleState);
 
 	function onChange(articleState: ArticleStateType): void {
-		console.log(articleState);
 		setArticleState(articleState);
 	}
 	return (
